@@ -1,5 +1,7 @@
 Rails.application.routes.draw do
 
+  get 'comments/create'
+
   get 'poems/show'
 
   devise_for :users, controllers: {
@@ -16,10 +18,13 @@ Rails.application.routes.draw do
     mount LetterOpenerWeb::Engine, at: "/letter_opener"
   end
 
-  resources :blogs, only: [:index, :new, :create, :edit, :update, :destroy] do
-    collection do
-      post :confirm
-    end
+  #resources :blogs, only: [:index, :new, :create, :edit, :update, :destroy] do
+  resources :blogs do
+    resources :comments
+    post :confirm, on: :collection
+    #collection do
+    #  post :confirm
+    #end
     member do
       post :confirm
     end
