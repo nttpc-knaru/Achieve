@@ -20,12 +20,15 @@ class CommentsController < ApplicationController
     #@blog.destroy
     #redirect_to blogs_path, notice: "ブログを削除しました!  
 
-    @comment = Comment.find(params[:id])
-    if @comment.destroy
-      format.html { redirect_to blog_path(@blog), notice: 'コメントを削除しました' }
-      format.js { render :index }
-    else
-      format.html { render :new }
+    @comment = Comment.find(params[:blog_id,:id])
+
+    respond_to do |format|
+      if @comment.destroy
+        #format.html { redirect_to blog_path(@blog), notice: 'コメントを削除しました' }
+        format.js { render :index }
+      else
+        format.html { render :new }
+      end
     end
 
   end
