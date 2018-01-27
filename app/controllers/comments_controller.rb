@@ -3,6 +3,7 @@ class CommentsController < ApplicationController
   def create
     @comment = current_user.comments.build(comment_params)
     @blog = @comment.blog
+    @comments = @blog.comments
 
     respond_to do |format|
       if @comment.save
@@ -20,6 +21,9 @@ class CommentsController < ApplicationController
     #redirect_to blogs_path, notice: "ブログを削除しました!  
 
     @comment = Comment.find(params[:id])
+
+    @blog = @comment.blog
+    @comments = @blog.comments
 
     respond_to do |format|
       if @comment.destroy
